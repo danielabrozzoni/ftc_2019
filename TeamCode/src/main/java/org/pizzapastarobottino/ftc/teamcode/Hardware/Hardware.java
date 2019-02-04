@@ -1,5 +1,6 @@
 package org.pizzapastarobottino.ftc.teamcode.Hardware;
 
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -28,6 +29,7 @@ public class Hardware {
 
     private MechanismMap<String> mechanisms = new MechanismMap<>();
 
+    private ColorSensor mColorSensor;
     private HardwareMap hwMap = null;
     private ElapsedTime period = new ElapsedTime();
 
@@ -52,7 +54,7 @@ public class Hardware {
         // Save reference to Hardware map
 
         hwMap = ahwMap;
-
+        mColorSensor = hwMap.colorSensor.get(Configs.colorSensor);
         // Define and Initialize Motors
         mechanisms.put(Configs.motorRuotaPosterioreDX, new Motor(hwMap.dcMotor.get(Configs.motorRuotaPosterioreDX)), Configs.avanti, 0);
         mechanisms.put(Configs.motorRuotaPosterioreSX, new Motor(hwMap.dcMotor.get(Configs.motorRuotaPosterioreSX)), Configs.indietro, 0);
@@ -89,5 +91,9 @@ public class Hardware {
 
         // Reset the cycle clock for the next pass.
         period.reset();
+    }
+
+    public ColorSensor getColorSensor() {
+        return mColorSensor;
     }
 }

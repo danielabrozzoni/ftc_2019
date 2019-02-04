@@ -53,6 +53,7 @@ public class OpenDay extends OpMode {
         telemetry.addLine("Dpad -> Su: " + gamepad2.dpad_up + " giu: " + gamepad2.dpad_down + " sx: " + gamepad2.dpad_left + " dx: " + gamepad2.dpad_right);
         telemetry.addLine("Bumpers -> sx " + gamepad2.left_bumper + " dx: " + gamepad2.right_bumper);
         telemetry.addLine("Trigger -> sx: " + gamepad2.left_trigger +  " dx: " + gamepad2.right_trigger);
+        telemetry.addLine("Sensore di colore -> R:" + robot.getColorSensor().red() + " B: " + robot.getColorSensor().blue() + " G: " + robot.getColorSensor().green());
     }
 
     private void indietro(float potenza) {
@@ -212,7 +213,6 @@ public class OpenDay extends OpMode {
         if(Math.abs(gamepad2.right_stick_x) > 0.1) {
           giraSuTeStesso(gamepad2.right_stick_x);
         }
-
 
         //trasla(gamepad2.dpad_up, gamepad2.dpad_down, gamepad2.dpad_left, gamepad2.dpad_right);
 
