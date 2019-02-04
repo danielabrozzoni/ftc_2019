@@ -70,25 +70,45 @@ public class OpenDay extends OpMode {
         powers[POSTERIORE_DX] = POS_DX_POWER * potenza;
     }
 
-    private void sinistra(float potenza) {
+    private void destra(float potenza) {
         powers[ANTERIORE_DX] = -ANT_DX_POWER * potenza;
         powers[POSTERIORE_SX] = -POS_SX_POWER * potenza;
         powers[ANTERIORE_SX] = ANT_SX_POWER * potenza;
         powers[POSTERIORE_DX] = POS_DX_POWER * potenza;
     }
 
-    private void destra(float potenza) {
+    private void sinistra(float potenza) {
         powers[ANTERIORE_DX] = ANT_DX_POWER * potenza;
         powers[POSTERIORE_SX] = POS_SX_POWER * potenza;
         powers[ANTERIORE_SX] = -ANT_SX_POWER * potenza;
         powers[POSTERIORE_DX] = -POS_DX_POWER * potenza;
     }
 
+    private void diagonaleSuSinistra(float potenza) {
+        powers[ANTERIORE_DX] = ANT_DX_POWER * potenza;
+        powers[POSTERIORE_SX] = POS_SX_POWER * potenza;
+    }
+
+    private void diagonaleSuDestra(float potenza) {
+        powers[ANTERIORE_SX] = ANT_SX_POWER * potenza;
+        powers[POSTERIORE_DX] = POS_DX_POWER * potenza;
+    }
+
+    private void diagonaleGiuSinistra(float potenza) {
+        powers[ANTERIORE_SX] = -ANT_SX_POWER * potenza;
+        powers[POSTERIORE_DX] = -POS_DX_POWER * potenza;
+    }
+
+    private void diagonaleGiuDestra(float potenza) {
+        powers[ANTERIORE_DX] = -ANT_DX_POWER * potenza;
+        powers[POSTERIORE_SX] = -POS_SX_POWER * potenza;
+    }
+
     private void trasla(float x, float y) {
 
         float r = x * x + y * y;
 
-        if(r < 0.3)
+        if(r < 0.2)
             return;
 
         y = -y;
@@ -96,14 +116,22 @@ public class OpenDay extends OpMode {
         telemetry.addLine("Arcatan: " + angolo);
 
 
-        if(angolo >= 67.5 && angolo < 112.5) {          //su
+        if(angolo >= 67.5 && angolo < 112.5) {              //su
             avanti(r);
-        } else if(angolo >= -112.5 && angolo < -67.5) {   // giu
-            indietro(r);
-        } else if(angolo >= -22.5 && angolo < 22.5) {
-            destra(r);
-        } else if(angolo >= 157.5 || angolo <= -157.5) {
+        } else if(angolo >= 112.5 && angolo < 157.5) {      // su sinistra
+          diagonaleSuSinistra(r);
+        } else if(angolo >= 157.5 || angolo < -157.5) {     // sinistra
             sinistra(r);
+        } else if(angolo >= -157.5 && angolo < -112.5) {    // giu sinistra
+            diagonaleGiuSinistra(r);
+        } else if(angolo >= -112.5 && angolo < -67.5) {     // giu
+            indietro(r);
+        } else if(angolo >= -67.5 && angolo < -22.5) {      // giu destra
+            diagonaleGiuDestra(r);
+        } else if(angolo >= -22.5 && angolo < 22.5) {       // destra
+            destra(r);
+        } else if(angolo >= 22.5 && angolo < 67.5) {        // su destra
+            diagonaleSuDestra(r);
         }
     }
 
@@ -197,7 +225,5 @@ public class OpenDay extends OpMode {
         robot.getMotor(Configs.motorRuotaPosterioreDX).move(powers[POSTERIORE_DX] * Configs.ruotaPosterioreDXrotationFactor);
         robot.getMotor(Configs.motorRuotaAnterioreSX).move(powers[ANTERIORE_SX] * Configs.ruotaAnterioreSXrotationFactor);
         robot.getMotor(Configs.motorRuotaPosterioreSX).move(powers[POSTERIORE_SX] * Configs.ruotaPosterioreSXrotationFactor);
-
-        // NB: appena lo fai per il braccio, togli il '* potenza'
     }
 }
