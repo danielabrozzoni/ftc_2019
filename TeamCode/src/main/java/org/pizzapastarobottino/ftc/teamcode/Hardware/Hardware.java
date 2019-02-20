@@ -96,4 +96,5 @@ public class Hardware {
     public ColorSensor getColorSensor() {
         return mColorSensor;
     }
+
 }
