@@ -10,12 +10,14 @@ public class Configs {
     public static final String motorRuotaAnterioreDX = "anteriore_destra";
     public static final String motorRuotaAnterioreSX = "anteriore_sinistra";
     public static final String colorSensor = "sensore_colore";
+    public static final String motorBraccio = "braccio_scatolina";
 
     //coefficenti di rotazione dei motori, impostandoli ad un valore minore di 1 il motore girerà meno di quanto impostato
     public static final double ruotaPosterioreDXrotationFactor = 1.0;
     public static final double ruotaPosterioreSXrotationFactor = 1.0;
     public static final double ruotaAnterioreDXrotationFactor = 1.0;
     public static final double ruotaAnterioreSXrotationFactor = 1.0;
+    public static final double bracciorotationFactor = 1.0;
 
     public static final double pinzaSXDirectionFactor = -1.0;
     public static final double pinzaDXDirectionFactor = 1.0;

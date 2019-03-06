@@ -8,13 +8,16 @@ public class Movement {
     private final int ANTERIORE_SX = 1;
     private final int POSTERIORE_DX = 2;
     private final int POSTERIORE_SX = 3;
+    private final int BRACCIO = 4;
 
     private final double ANT_SX_POWER = 0.1;
     private final double ANT_DX_POWER = 0.1;
     private final double POS_SX_POWER = 0.1;
     private final double POS_DX_POWER = 0.1;
 
-    private double[] powers = new double[7];
+    private final double BRACCIO_POWER = 0.1;
+
+    private double[] powers = new double[8];
 
     private Hardware robot;
 
@@ -79,10 +82,20 @@ public class Movement {
         powers[ANTERIORE_DX] = powers[POSTERIORE_DX] = delta;
     }
 
+    public void alzaBraccio(double potenza){
+        powers[BRACCIO] = BRACCIO_POWER * potenza;
+    }
+
+    public void abbassaBraccio(double potenza){
+        powers[BRACCIO] = -BRACCIO_POWER * potenza;
+    }
+
     public void resetPowers(){
         for(int i = ANTERIORE_DX; i <= POSTERIORE_SX; i++)
             powers[i] = 0;
     }
+
+
 
     public boolean robotFermo(){
         for(int i = ANTERIORE_DX; i <= POSTERIORE_SX; i++)
@@ -97,6 +110,7 @@ public class Movement {
         robot.getMotor(Configs.motorRuotaPosterioreDX).move(powers[POSTERIORE_DX] * Configs.ruotaPosterioreDXrotationFactor);
         robot.getMotor(Configs.motorRuotaAnterioreSX).move(powers[ANTERIORE_SX] * Configs.ruotaAnterioreSXrotationFactor);
         robot.getMotor(Configs.motorRuotaPosterioreSX).move(powers[POSTERIORE_SX] * Configs.ruotaPosterioreSXrotationFactor);
+        robot.getMotor(Configs.motorBraccio).move(powers[BRACCIO] * Configs.bracciorotationFactor);
         powers = new double[7];
     }
 }

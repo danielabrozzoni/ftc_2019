@@ -22,6 +22,7 @@ import org.pizzapastarobottino.ftc.teamcode.Movement;
 public class Barcelona extends OpMode {
     private Hardware robot = new Hardware();
     private Movement mMovement;
+    private final double potere = 0.1;
 
     @Override
     public void init() {
@@ -87,11 +88,20 @@ public class Barcelona extends OpMode {
         tellState();
 
 
-        if (gamepad2.y) {
-            antipanico();
-            return;
-        }
+        //if (gamepad2.y) {
+         //   antipanico();
+         //   return;
+        //}
 
+        //cosi non puoi premere x e y in contemporanea
+        if(gamepad2.y) {
+            while (gamepad2.y)
+                mMovement.alzaBraccio(potere);
+        }
+        else {
+            while (gamepad2.x)
+                mMovement.abbassaBraccio(potere);
+        }
         trasla(gamepad2.left_stick_x, gamepad2.left_stick_y);
 
         if(Math.abs(gamepad2.right_stick_x) > 0.1) {
