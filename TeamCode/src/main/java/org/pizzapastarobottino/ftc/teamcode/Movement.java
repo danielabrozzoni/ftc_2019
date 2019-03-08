@@ -98,7 +98,7 @@ public class Movement {
 
 
     public boolean robotFermo(){
-        for(int i = ANTERIORE_DX; i <= POSTERIORE_SX; i++)
+        for(int i = ANTERIORE_DX; i <= BRACCIO; i++)
             if(powers[i] > 0)
                 return false;
         return true;
@@ -111,6 +111,6 @@ public class Movement {
         robot.getMotor(Configs.motorRuotaAnterioreSX).move(powers[ANTERIORE_SX] * Configs.ruotaAnterioreSXrotationFactor);
         robot.getMotor(Configs.motorRuotaPosterioreSX).move(powers[POSTERIORE_SX] * Configs.ruotaPosterioreSXrotationFactor);
         robot.getMotor(Configs.motorBraccio).move(powers[BRACCIO] * Configs.bracciorotationFactor);
-        powers = new double[7];
+        powers = new double[8];
     }
 }

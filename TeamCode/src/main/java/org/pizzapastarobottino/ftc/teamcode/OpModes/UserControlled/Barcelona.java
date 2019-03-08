@@ -1,15 +1,11 @@
 package org.pizzapastarobottino.ftc.teamcode.OpModes.UserControlled;
 
-import android.util.Pair;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Consumer;
-import org.pizzapastarobottino.ftc.teamcode.Configs;
 import org.pizzapastarobottino.ftc.teamcode.Hardware.Hardware;
 import org.pizzapastarobottino.ftc.teamcode.Hardware.Mechanism;
-import org.pizzapastarobottino.ftc.teamcode.Hardware.UndeliverablePowerException;
 import org.pizzapastarobottino.ftc.teamcode.Movement;
 
 
@@ -22,7 +18,7 @@ import org.pizzapastarobottino.ftc.teamcode.Movement;
 public class Barcelona extends OpMode {
     private Hardware robot = new Hardware();
     private Movement mMovement;
-    private final double potere = 0.1;
+    private final double potere = 1;
 
     @Override
     public void init() {
@@ -94,14 +90,11 @@ public class Barcelona extends OpMode {
         //}
 
         //cosi non puoi premere x e y in contemporanea
-        if(gamepad2.y) {
-            while (gamepad2.y)
-                mMovement.alzaBraccio(potere);
-        }
-        else {
-            while (gamepad2.x)
-                mMovement.abbassaBraccio(potere);
-        }
+        if(gamepad2.left_trigger > 0)
+            mMovement.alzaBraccio(gamepad2.left_trigger);
+        if(gamepad2.right_trigger > 0)
+            mMovement.abbassaBraccio(gamepad2.right_trigger);
+
         trasla(gamepad2.left_stick_x, gamepad2.left_stick_y);
 
         if(Math.abs(gamepad2.right_stick_x) > 0.1) {

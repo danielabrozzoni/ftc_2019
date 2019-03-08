@@ -60,6 +60,8 @@ public class Hardware {
         mechanisms.put(Configs.motorRuotaPosterioreSX, new Motor(hwMap.dcMotor.get(Configs.motorRuotaPosterioreSX)), Configs.indietro, 0);
         mechanisms.put(Configs.motorRuotaAnterioreDX, new Motor(hwMap.dcMotor.get(Configs.motorRuotaAnterioreDX)), Configs.avanti, 0);
         mechanisms.put(Configs.motorRuotaAnterioreSX, new Motor(hwMap.dcMotor.get(Configs.motorRuotaAnterioreSX)), Configs.indietro, 0);
+        mechanisms.put(Configs.motorBraccio, new Motor(hwMap.dcMotor.get(Configs.motorBraccio)), Configs.avanti, 0);
+
 
         for(Mechanism i : mechanisms.values()){
             i.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
