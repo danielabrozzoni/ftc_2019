@@ -80,16 +80,29 @@ public class Barcelona extends OpMode {
         }
     }
 
-
     @Override
     public void loop() {
-
+        float potenza = 1;
         tellState();
 
+        if (gamepad2.right_trigger > 0) {
+            mMovement.braccioSu(gamepad2.right_trigger);
+        }
+
+        if (gamepad2.left_trigger > 0) {
+            mMovement.braccioGiu(gamepad2.left_trigger);
+        }
 
         if (gamepad2.y) {
-            antipanico();
-            return;
+            mMovement.alzaGancio(potenza);
+        }
+
+        if (gamepad2.x) {
+            mMovement.markerOut(potenza);
+        }
+
+        if (gamepad2.a) {
+            mMovement.abbassaGancio(potenza);
         }
 
         trasla(gamepad2.left_stick_x, gamepad2.left_stick_y);
@@ -97,8 +110,6 @@ public class Barcelona extends OpMode {
         if(Math.abs(gamepad2.right_stick_x) > 0.1) {
             mMovement.giraSuTeStesso(gamepad2.right_stick_x);
         }
-
-        //trasla(gamepad2.dpad_up, gamepad2.dpad_down, gamepad2.dpad_left, gamepad2.dpad_right);
 
         mMovement.aggiorna();
     }

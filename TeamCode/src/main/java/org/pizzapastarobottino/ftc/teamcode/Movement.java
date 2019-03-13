@@ -8,13 +8,17 @@ public class Movement {
     private final int ANTERIORE_SX = 1;
     private final int POSTERIORE_DX = 2;
     private final int POSTERIORE_SX = 3;
+    private final int BRACCIO = 4;
+    private final int GANCIO = 5;
+    private final int SERVOMARKER = 6;
+    private final int POWERS_SIZE = 7;
 
     private final double ANT_SX_POWER = 0.1;
     private final double ANT_DX_POWER = 0.1;
     private final double POS_SX_POWER = 0.1;
     private final double POS_DX_POWER = 0.1;
 
-    private double[] powers = new double[7];
+    private double[] powers = new double[POWERS_SIZE];
 
     private Hardware robot;
 
@@ -79,6 +83,25 @@ public class Movement {
         powers[ANTERIORE_DX] = powers[POSTERIORE_DX] = delta;
     }
 
+    public void markerOut(float power){ powers[SERVOMARKER] = power;}
+
+    public void alzaGancio(float power){
+        powers[GANCIO] = power;
+    }
+
+    public void abbassaGancio(float power){
+        powers[GANCIO] = -power;
+    }
+
+    public void braccioSu(float power){
+        powers[BRACCIO] = power;
+    }
+
+    public void braccioGiu(float power){
+        powers[BRACCIO] = -power;
+    }
+
+
     public void resetPowers(){
         for(int i = ANTERIORE_DX; i <= POSTERIORE_SX; i++)
             powers[i] = 0;
@@ -97,6 +120,9 @@ public class Movement {
         robot.getMotor(Configs.motorRuotaPosterioreDX).move(powers[POSTERIORE_DX] * Configs.ruotaPosterioreDXrotationFactor);
         robot.getMotor(Configs.motorRuotaAnterioreSX).move(powers[ANTERIORE_SX] * Configs.ruotaAnterioreSXrotationFactor);
         robot.getMotor(Configs.motorRuotaPosterioreSX).move(powers[POSTERIORE_SX] * Configs.ruotaPosterioreSXrotationFactor);
-        powers = new double[7];
+        robot.getMotor(Configs.motorBraccio).move(powers[BRACCIO] * Configs.braccioFactor);
+        robot.getMotor(Configs.motorGancio).move(powers[GANCIO] * Configs.gancioFactor);
+        robot.getServo(Configs.servoMarker).move(powers[SERVOMARKER]);
+        powers = new double[POWERS_SIZE];
     }
 }

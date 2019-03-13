@@ -55,11 +55,16 @@ public class Hardware {
 
         hwMap = ahwMap;
         mColorSensor = hwMap.colorSensor.get(Configs.colorSensor);
+
         // Define and Initialize Motors
         mechanisms.put(Configs.motorRuotaPosterioreDX, new Motor(hwMap.dcMotor.get(Configs.motorRuotaPosterioreDX)), Configs.avanti, 0);
         mechanisms.put(Configs.motorRuotaPosterioreSX, new Motor(hwMap.dcMotor.get(Configs.motorRuotaPosterioreSX)), Configs.indietro, 0);
         mechanisms.put(Configs.motorRuotaAnterioreDX, new Motor(hwMap.dcMotor.get(Configs.motorRuotaAnterioreDX)), Configs.avanti, 0);
         mechanisms.put(Configs.motorRuotaAnterioreSX, new Motor(hwMap.dcMotor.get(Configs.motorRuotaAnterioreSX)), Configs.indietro, 0);
+        mechanisms.put(Configs.motorBraccio, new Motor(hwMap.dcMotor.get(Configs.motorBraccio)), Configs.avanti, 0);
+        mechanisms.put(Configs.motorGancio, new Motor(hwMap.dcMotor.get(Configs.motorGancio)), Configs.avanti, 0);
+        mechanisms.put(Configs.servoMarker, new Servo(hwMap.servo.get(Configs.servoMarker), Configs.servoMarker, Configs.markerFactor, 0));
+
 
         for(Mechanism i : mechanisms.values()){
             i.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
