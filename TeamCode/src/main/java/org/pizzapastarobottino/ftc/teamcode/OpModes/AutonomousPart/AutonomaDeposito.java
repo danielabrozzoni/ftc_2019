@@ -37,14 +37,18 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import org.pizzapastarobottino.ftc.teamcode.*;
 
 import org.pizzapastarobottino.ftc.teamcode.Configs;
 import org.pizzapastarobottino.ftc.teamcode.Hardware.Hardware;
+import org.pizzapastarobottino.ftc.teamcode.Hardware.Motor;
 import org.pizzapastarobottino.ftc.teamcode.Hardware.UndeliverablePowerException;
 import org.pizzapastarobottino.ftc.teamcode.Movement;
 import org.pizzapastarobottino.ftc.teamcode.OpModes.UserControlled.Drive;
 import org.pizzapastarobottino.ftc.teamcode.OpModes.UserControlled.MechanumWheels;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
+import java.util.ArrayList;
 
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
@@ -67,12 +71,33 @@ public class AutonomaDeposito extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private Hardware robot = new Hardware();
     private Movement mMovement;
+    public final int TICKS_PPR = 7;
+    public final ArrayList<Integer> gearsIndex = new ArrayList<>();
+    public final ArrayList<Motor> motors = new ArrayList<>();
 
+    private final int ANTERIORE_DX = 0;
+    private final int ANTERIORE_SX = 1;
+    private final int POSTERIORE_DX = 2;
+    private final int POSTERIORE_SX = 3;
+    private final int BRACCIO = 4;
+    private final int GANCIO = 5;
 
     @Override
     public void runOpMode() {
+        motors.add(ANTERIORE_DX, robot.getMotor(Configs.motorRuotaAnterioreDX));
+        motors.add(ANTERIORE_SX, robot.getMotor(Configs.motorRuotaAnterioreSX));
+        motors.add(POSTERIORE_DX, robot.getMotor(Configs.motorRuotaPosterioreDX));
+        motors.add(POSTERIORE_SX, robot.getMotor(Configs.motorRuotaPosterioreSX));
+
+        gearsIndex.add(ANTERIORE_DX, 60);
+        gearsIndex.add(ANTERIORE_SX, 60);
+        gearsIndex.add(POSTERIORE_DX, 60);
+        gearsIndex.add(POSTERIORE_SX, 60);
+
+
         robot.init(hardwareMap);
         mMovement = new Movement(robot);
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -82,26 +107,19 @@ public class AutonomaDeposito extends LinearOpMode {
         telemetry.addLine("Inizio sinistra");
         telemetry.update();
 
-        mMovement.sinistra(1);
-        mMovement.aggiorna();
-        runtime.reset();
-        while(runtime.milliseconds() < 1500);
+        for(Motor m: motors) {
 
-        telemetry.addLine("Dormo");
-        telemetry.update();
+            m.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            m.setTargetPosition(1440);
+        }
 
-        mMovement.resetPowers();
-        mMovement.aggiorna();
-        runtime.reset();
-        while(runtime.milliseconds() < 1000);
+        while(motors.get(ANTERIORE_DX).isBusy() && motors.get(ANTERIORE_SX).isBusy() && motors.get(POSTERIORE_DX).isBusy() && motors.get(POSTERIORE_SX).isBusy() && opModeIsActive()) {
+            //Loop body can be empty
+        }
 
-        telemetry.addLine("Inizio avanti");
-        telemetry.update();
-
-        mMovement.avanti(1);
-        mMovement.aggiorna();
-        runtime.reset();
-        while(runtime.milliseconds() < 750);
+        for(Motor m: motors) {
+            m.setPower(0);
+        }
 
 
         mMovement.resetPowers();

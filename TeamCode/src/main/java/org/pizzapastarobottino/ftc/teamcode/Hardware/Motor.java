@@ -84,4 +84,16 @@ public class Motor extends Mechanism {
     public void init() {
         this.setPower(0);
     }
+
+    public void setTargetPosition(int position) {
+        motor.setTargetPosition(position);
+    }
+
+    public boolean isBusy() {
+        return motor.isBusy();
+    }
+
+    public void setPower(int power) {
+        motor.setPower(power);
+    }
 }
