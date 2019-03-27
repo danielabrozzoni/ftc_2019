@@ -1,8 +1,9 @@
-package org.pizzapastarobottino.ftc.teamcode;
+package org.pizzapastarobottino.ftc.teamcode.Movement;
 
+import org.pizzapastarobottino.ftc.teamcode.Configs;
 import org.pizzapastarobottino.ftc.teamcode.Hardware.Hardware;
 
-public class Movement {
+public class ControlledMovement {
 
     private final int ANTERIORE_DX = 0;
     private final int ANTERIORE_SX = 1;
@@ -22,7 +23,7 @@ public class Movement {
 
     private Hardware robot;
 
-    public Movement(Hardware robot) {
+    public ControlledMovement(Hardware robot) {
         this.robot = robot;
     }
 
@@ -120,9 +121,9 @@ public class Movement {
         robot.getMotor(Configs.motorRuotaPosterioreDX).move(powers[POSTERIORE_DX] * Configs.ruotaPosterioreDXrotationFactor);
         robot.getMotor(Configs.motorRuotaAnterioreSX).move(powers[ANTERIORE_SX] * Configs.ruotaAnterioreSXrotationFactor);
         robot.getMotor(Configs.motorRuotaPosterioreSX).move(powers[POSTERIORE_SX] * Configs.ruotaPosterioreSXrotationFactor);
-        robot.getMotor(Configs.motorBraccio).move(powers[BRACCIO] * Configs.braccioFactor);
-        robot.getMotor(Configs.motorGancio).move(powers[GANCIO] * Configs.gancioFactor);
-        robot.getServo(Configs.servoMarker).move(powers[SERVOMARKER]);
+        //robot.getMotor(Configs.motorBraccio).move(powers[BRACCIO] * Configs.braccioFactor);
+        //robot.getMotor(Configs.motorGancio).move(powers[GANCIO] * Configs.gancioFactor);
+        //robot.getServo(Configs.servoMarker).move(powers[SERVOMARKER]);
         powers = new double[POWERS_SIZE];
     }
 }

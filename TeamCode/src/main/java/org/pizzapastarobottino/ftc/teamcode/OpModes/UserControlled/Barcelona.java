@@ -1,16 +1,12 @@
 package org.pizzapastarobottino.ftc.teamcode.OpModes.UserControlled;
 
-import android.util.Pair;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Consumer;
-import org.pizzapastarobottino.ftc.teamcode.Configs;
 import org.pizzapastarobottino.ftc.teamcode.Hardware.Hardware;
 import org.pizzapastarobottino.ftc.teamcode.Hardware.Mechanism;
-import org.pizzapastarobottino.ftc.teamcode.Hardware.UndeliverablePowerException;
-import org.pizzapastarobottino.ftc.teamcode.Movement;
+import org.pizzapastarobottino.ftc.teamcode.Movement.ControlledMovement;
 
 
 /**
@@ -21,12 +17,12 @@ import org.pizzapastarobottino.ftc.teamcode.Movement;
 
 public class Barcelona extends OpMode {
     private Hardware robot = new Hardware();
-    private Movement mMovement;
+    private ControlledMovement mControlledMovement;
 
     @Override
     public void init() {
         robot.init(hardwareMap);
-        mMovement = new Movement(robot);
+        mControlledMovement = new ControlledMovement(robot);
     }
 
     private void antipanico() {
@@ -62,21 +58,21 @@ public class Barcelona extends OpMode {
 
 
         if(angolo >= 67.5 && angolo < 112.5) {              //su
-            mMovement.avanti(r);
+            mControlledMovement.avanti(r);
         } else if(angolo >= 112.5 && angolo < 157.5) {      // su sinistra
-            mMovement.diagonaleSuSinistra(r);
+            mControlledMovement.diagonaleSuSinistra(r);
         } else if(angolo >= 157.5 || angolo < -157.5) {     // sinistra
-            mMovement.sinistra(r);
+            mControlledMovement.sinistra(r);
         } else if(angolo >= -157.5 && angolo < -112.5) {    // giu sinistra
-            mMovement.diagonaleGiuSinistra(r);
+            mControlledMovement.diagonaleGiuSinistra(r);
         } else if(angolo >= -112.5 && angolo < -67.5) {     // giu
-            mMovement.indietro(r);
+            mControlledMovement.indietro(r);
         } else if(angolo >= -67.5 && angolo < -22.5) {      // giu destra
-            mMovement.diagonaleGiuDestra(r);
+            mControlledMovement.diagonaleGiuDestra(r);
         } else if(angolo >= -22.5 && angolo < 22.5) {       // destra
-            mMovement.destra(r);
+            mControlledMovement.destra(r);
         } else if(angolo >= 22.5 && angolo < 67.5) {        // su destra
-            mMovement.diagonaleSuDestra(r);
+            mControlledMovement.diagonaleSuDestra(r);
         }
     }
 
@@ -86,33 +82,32 @@ public class Barcelona extends OpMode {
         tellState();
 
         if (gamepad2.right_trigger > 0) {
-            mMovement.braccioSu(gamepad2.right_trigger);
+            mControlledMovement.braccioSu(gamepad2.right_trigger);
         }
 
         if (gamepad2.left_trigger > 0) {
-            mMovement.braccioGiu(gamepad2.left_trigger);
+            mControlledMovement.braccioGiu(gamepad2.left_trigger);
         }
 
         if (gamepad2.y) {
-            mMovement.alzaGancio(potenza);
+            mControlledMovement.alzaGancio(potenza);
         }
 
         if (gamepad2.x) {
-            mMovement.markerOut(potenza);
+            mControlledMovement.markerOut(potenza);
         }
 
         if (gamepad2.a) {
-            mMovement.abbassaGancio(potenza);
+            mControlledMovement.abbassaGancio(potenza);
         }
 
         trasla(gamepad2.left_stick_x, gamepad2.left_stick_y);
 
         if(Math.abs(gamepad2.right_stick_x) > 0.1) {
-            mMovement.giraSuTeStesso(gamepad2.right_stick_x);
+            mControlledMovement.giraSuTeStesso(gamepad2.right_stick_x);
         }
 
-        mMovement.aggiorna();
+        mControlledMovement.aggiorna();
     }
-
 
 }

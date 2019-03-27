@@ -32,21 +32,14 @@ package org.pizzapastarobottino.ftc.teamcode.OpModes.AutonomousPart;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
-import org.pizzapastarobottino.ftc.teamcode.*;
 
 import org.pizzapastarobottino.ftc.teamcode.Configs;
 import org.pizzapastarobottino.ftc.teamcode.Hardware.Hardware;
 import org.pizzapastarobottino.ftc.teamcode.Hardware.Motor;
-import org.pizzapastarobottino.ftc.teamcode.Hardware.UndeliverablePowerException;
-import org.pizzapastarobottino.ftc.teamcode.Movement;
-import org.pizzapastarobottino.ftc.teamcode.OpModes.UserControlled.Drive;
-import org.pizzapastarobottino.ftc.teamcode.OpModes.UserControlled.MechanumWheels;
-import com.qualcomm.robotcore.hardware.DcMotor;
+import org.pizzapastarobottino.ftc.teamcode.Movement.AutonomousMovement;
+import org.pizzapastarobottino.ftc.teamcode.Movement.ControlledMovement;
 
 import java.util.ArrayList;
 
@@ -70,7 +63,8 @@ public class AutonomaDeposito extends LinearOpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private Hardware robot = new Hardware();
-    private Movement mMovement;
+    private ControlledMovement mControlledMovement;
+    private AutonomousMovement mAutonomousMovement;
     public final int TICKS_PPR = 7;
     public final ArrayList<Integer> gearsIndex = new ArrayList<>();
     public final ArrayList<Motor> motors = new ArrayList<>();
@@ -84,6 +78,8 @@ public class AutonomaDeposito extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        robot.init(hardwareMap);
+
         motors.add(ANTERIORE_DX, robot.getMotor(Configs.motorRuotaAnterioreDX));
         motors.add(ANTERIORE_SX, robot.getMotor(Configs.motorRuotaAnterioreSX));
         motors.add(POSTERIORE_DX, robot.getMotor(Configs.motorRuotaPosterioreDX));
@@ -94,9 +90,7 @@ public class AutonomaDeposito extends LinearOpMode {
         gearsIndex.add(POSTERIORE_DX, 60);
         gearsIndex.add(POSTERIORE_SX, 60);
 
-
-        robot.init(hardwareMap);
-        mMovement = new Movement(robot);
+        mAutonomousMovement = new AutonomousMovement(robot);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -104,17 +98,55 @@ public class AutonomaDeposito extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        telemetry.addLine("Inizio sinistra");
+        telemetry.addLine("Indietro");
         telemetry.update();
 
-        for(Motor m: motors) {
+        mAutonomousMovement.diagonaleGiuDestra(1440);
 
-            m.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        mAutonomousMovement.aggiorna(telemetry);
+
+        sleep(100);
+
+        mAutonomousMovement.diagonaleSuSinistra(1440);
+
+        mAutonomousMovement.aggiorna(telemetry);
+
+        sleep(100);
+
+        mAutonomousMovement.destra(1440);
+
+        mAutonomousMovement.aggiorna(telemetry);
+
+        sleep(100);
+
+        mAutonomousMovement.diagonaleGiuSinistra(1440);
+
+        mAutonomousMovement.aggiorna(telemetry);
+
+        sleep(100);
+
+        mAutonomousMovement.diagonaleSuDestra(1440);
+
+        mAutonomousMovement.aggiorna(telemetry);
+
+
+        /*for(Motor m: motors) {
+
+            m.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            m.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             m.setTargetPosition(1440);
+            m.setPower(1);
         }
 
-        while(motors.get(ANTERIORE_DX).isBusy() && motors.get(ANTERIORE_SX).isBusy() && motors.get(POSTERIORE_DX).isBusy() && motors.get(POSTERIORE_SX).isBusy() && opModeIsActive()) {
-            //Loop body can be empty
+        while(motors.get(ANTERIORE_DX).getCurrentPosition() <  motors.get(ANTERIORE_DX).getTargetPosition() &&
+                motors.get(ANTERIORE_SX).getCurrentPosition() <  motors.get(ANTERIORE_SX).getTargetPosition() &&
+                motors.get(POSTERIORE_DX).getCurrentPosition() <  motors.get(POSTERIORE_DX).getTargetPosition() &&
+                motors.get(POSTERIORE_SX).getCurrentPosition() <  motors.get(POSTERIORE_SX).getTargetPosition()) {
+            try {
+                waitOneFullHardwareCycle();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         for(Motor m: motors) {
@@ -122,7 +154,7 @@ public class AutonomaDeposito extends LinearOpMode {
         }
 
 
-        mMovement.resetPowers();
+        mControlledMovement.resetPowers();*/
 
     }
 }

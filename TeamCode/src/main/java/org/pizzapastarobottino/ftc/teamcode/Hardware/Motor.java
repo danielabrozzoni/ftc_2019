@@ -20,6 +20,7 @@ public class Motor extends Mechanism {
 
     public void setBaseDirection(DcMotorSimple.Direction baseDirection) {
         this.baseDirection = baseDirection;
+        motor.setDirection(baseDirection);
     }
 
     public void reverse(double power) {
@@ -95,5 +96,13 @@ public class Motor extends Mechanism {
 
     public void setPower(int power) {
         motor.setPower(power);
+    }
+
+    public int getCurrentPosition() {
+        return motor.getCurrentPosition();
+    }
+
+    public int getTargetPosition() {
+        return motor.getTargetPosition();
     }
 }
