@@ -63,7 +63,8 @@ public class Hardware {
         mechanisms.put(Configs.motorRuotaAnterioreSX, new Motor(hwMap.dcMotor.get(Configs.motorRuotaAnterioreSX)), Configs.indietro, 0);
         mechanisms.put(Configs.motorBraccio, new Motor(hwMap.dcMotor.get(Configs.motorBraccio)), Configs.avanti, 0);
         mechanisms.put(Configs.motorGancio, new Motor(hwMap.dcMotor.get(Configs.motorGancio)), Configs.avanti, 0);
-        //mechanisms.put(Configs.servoMarker, new Servo(hwMap.servo.get(Configs.servoMarker), Configs.servoMarker, Configs.markerFactor, 0));
+        mechanisms.put(Configs.servoMarker, new Servo(hwMap.servo.get(Configs.servoMarker), Configs.servoMarker, Configs.markerFactor, 0));
+        mechanisms.put(Configs.servoMarker2, new Servo(hwMap.servo.get(Configs.servoMarker2), Configs.servoMarker2, Configs.markerFactor, 0));
 
 
         for(Mechanism i : mechanisms.values()){

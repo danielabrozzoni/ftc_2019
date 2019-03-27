@@ -2,6 +2,8 @@ package org.pizzapastarobottino.ftc.teamcode.Hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public abstract class Mechanism {
 
     private String id = null;

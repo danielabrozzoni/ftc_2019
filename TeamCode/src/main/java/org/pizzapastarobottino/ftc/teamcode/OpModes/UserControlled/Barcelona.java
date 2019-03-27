@@ -89,15 +89,15 @@ public class Barcelona extends OpMode {
             mControlledMovement.braccioGiu(gamepad2.left_trigger);
         }
 
-        if (gamepad2.y) {
+        if (gamepad2.dpad_up) {
             mControlledMovement.alzaGancio(potenza);
         }
 
         if (gamepad2.x) {
-            mControlledMovement.markerOut(potenza);
+            mControlledMovement.markerOut();
         }
 
-        if (gamepad2.a) {
+        if (gamepad2.dpad_down) {
             mControlledMovement.abbassaGancio(potenza);
         }
 
@@ -107,7 +107,7 @@ public class Barcelona extends OpMode {
             mControlledMovement.giraSuTeStesso(gamepad2.right_stick_x);
         }
 
-        mControlledMovement.aggiorna();
+        mControlledMovement.aggiorna(telemetry);
     }
 
 }

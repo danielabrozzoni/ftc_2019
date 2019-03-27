@@ -3,6 +3,8 @@ package org.pizzapastarobottino.ftc.teamcode.Hardware;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class Motor extends Mechanism {
 
     private DcMotor motor;

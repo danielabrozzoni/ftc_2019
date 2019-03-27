@@ -13,7 +13,8 @@ public class Configs {
     public static final String colorSensor = "sensore_colore";
     public static final String motorBraccio = "motore_braccio";
     public static final String motorGancio = "motore_gancio";
-    //public static final String servoMarker = "servo_gancio";
+    public static final String servoMarker = "servo_marker";
+    public static final String servoMarker2 = "servo_marker_2";
 
     //coefficenti di rotazione dei motori, impostandoli ad un valore minore di 1 il motore girerà meno di quanto impostato
     public static final double ruotaPosterioreDXrotationFactor = 1.0;

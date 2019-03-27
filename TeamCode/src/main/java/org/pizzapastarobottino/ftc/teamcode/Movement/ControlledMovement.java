@@ -1,5 +1,6 @@
 package org.pizzapastarobottino.ftc.teamcode.Movement;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.pizzapastarobottino.ftc.teamcode.Configs;
 import org.pizzapastarobottino.ftc.teamcode.Hardware.Hardware;
 
@@ -12,12 +13,14 @@ public class ControlledMovement {
     private final int BRACCIO = 4;
     private final int GANCIO = 5;
     private final int SERVOMARKER = 6;
-    private final int POWERS_SIZE = 7;
+    private final int SERVOMARKER2 = 7;
+    private final int POWERS_SIZE = 8;
 
-    private final double ANT_SX_POWER = 0.1;
-    private final double ANT_DX_POWER = 0.1;
-    private final double POS_SX_POWER = 0.1;
-    private final double POS_DX_POWER = 0.1;
+    private final double ANT_SX_POWER = 0.4;
+    private final double ANT_DX_POWER = 0.4;
+    private final double POS_SX_POWER = 0.4;
+    private final double POS_DX_POWER = 0.4;
+    private final double SERVO_ROTATION = 0.1;
 
     private double[] powers = new double[POWERS_SIZE];
 
@@ -84,7 +87,8 @@ public class ControlledMovement {
         powers[ANTERIORE_DX] = powers[POSTERIORE_DX] = delta;
     }
 
-    public void markerOut(float power){ powers[SERVOMARKER] = power;}
+    public void markerOut(){ powers[SERVOMARKER] = SERVO_ROTATION;
+        powers[SERVOMARKER2] = SERVO_ROTATION;}
 
     public void alzaGancio(float power){
         powers[GANCIO] = power;
@@ -115,15 +119,20 @@ public class ControlledMovement {
         return true;
     }
 
-    public void aggiorna() {
+    public void aggiorna(Telemetry t) {
 
         robot.getMotor(Configs.motorRuotaAnterioreDX).move(powers[ANTERIORE_DX] * Configs.ruotaAnterioreDXrotationFactor);
         robot.getMotor(Configs.motorRuotaPosterioreDX).move(powers[POSTERIORE_DX] * Configs.ruotaPosterioreDXrotationFactor);
         robot.getMotor(Configs.motorRuotaAnterioreSX).move(powers[ANTERIORE_SX] * Configs.ruotaAnterioreSXrotationFactor);
         robot.getMotor(Configs.motorRuotaPosterioreSX).move(powers[POSTERIORE_SX] * Configs.ruotaPosterioreSXrotationFactor);
-        //robot.getMotor(Configs.motorBraccio).move(powers[BRACCIO] * Configs.braccioFactor);
-        //robot.getMotor(Configs.motorGancio).move(powers[GANCIO] * Configs.gancioFactor);
-        //robot.getServo(Configs.servoMarker).move(powers[SERVOMARKER]);
+        robot.getMotor(Configs.motorBraccio).move(powers[BRACCIO] * Configs.braccioFactor);
+        robot.getMotor(Configs.motorGancio).move(powers[GANCIO] * Configs.gancioFactor);
+        t.addLine("" + powers[SERVOMARKER]);
+        t.update();
+        if(powers[SERVOMARKER] > 0)
+            robot.getServo(Configs.servoMarker).move(powers[SERVOMARKER]);
+        if(powers[SERVOMARKER2] > 0)
+            robot.getServo(Configs.servoMarker2).move(powers[SERVOMARKER2]);
         powers = new double[POWERS_SIZE];
     }
 }

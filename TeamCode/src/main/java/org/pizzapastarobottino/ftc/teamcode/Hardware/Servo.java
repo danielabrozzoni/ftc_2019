@@ -2,6 +2,8 @@ package org.pizzapastarobottino.ftc.teamcode.Hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class Servo extends Mechanism {
     private com.qualcomm.robotcore.hardware.Servo servo;
     private String id = null;
@@ -31,7 +33,7 @@ public class Servo extends Mechanism {
         return servo.getPosition();
     }
 
-    public void move(double delta){
+    public void move(double delta) {
         if(servo.getPosition() + delta > 1) delta = 1 - servo.getPosition();
         servo.setPosition(servo.getPosition() + delta);
     }
@@ -41,7 +43,7 @@ public class Servo extends Mechanism {
         return super.getId().hashCode();
     }
 
-    public void stop(){
+    public void stop() {
         servo.setPosition(getPosition());
     }
 
