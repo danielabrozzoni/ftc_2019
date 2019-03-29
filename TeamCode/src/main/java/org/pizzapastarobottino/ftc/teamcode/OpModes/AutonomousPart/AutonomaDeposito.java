@@ -98,35 +98,14 @@ public class AutonomaDeposito extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        telemetry.addLine("Indietro");
-        telemetry.update();
-
-        mAutonomousMovement.diagonaleGiuDestra(1440);
-
+        mAutonomousMovement.sinistra(3245);
+        sleep(500);
         mAutonomousMovement.aggiorna(telemetry);
-
-        sleep(100);
-
-        mAutonomousMovement.diagonaleSuSinistra(1440);
-
+        mAutonomousMovement.sinistra(1623 + 381*2);
         mAutonomousMovement.aggiorna(telemetry);
-
-        sleep(100);
-
-        mAutonomousMovement.destra(1440);
-
-        mAutonomousMovement.aggiorna(telemetry);
-
-        sleep(100);
-
-        mAutonomousMovement.diagonaleGiuSinistra(1440);
-
-        mAutonomousMovement.aggiorna(telemetry);
-
-        sleep(100);
-
-        mAutonomousMovement.diagonaleSuDestra(1440);
-
+        //mAutonomousMovement.markerOut();
+        sleep(500);
+        mAutonomousMovement.giraSuTeStesso(1350/2);
         mAutonomousMovement.aggiorna(telemetry);
 
 

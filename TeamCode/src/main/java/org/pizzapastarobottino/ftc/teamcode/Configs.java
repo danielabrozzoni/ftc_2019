@@ -23,6 +23,8 @@ public class Configs {
     public static final double ruotaAnterioreSXrotationFactor = 1.0;
     public static final double braccioFactor = 1.0;
     public static final double gancioFactor = 1.0;
+    public static final double servoFactor = 0;
+    public static final double servo2Factor = 0;
 
     public static final double markerFactor = 1.0;
     public static final double pinzaDXDirectionFactor = 1.0;

@@ -20,7 +20,7 @@ public class ControlledMovement {
     private final double ANT_DX_POWER = 0.4;
     private final double POS_SX_POWER = 0.4;
     private final double POS_DX_POWER = 0.4;
-    private final double SERVO_ROTATION = 0.1;
+    private final double SERVO_ROTATION = 0;
 
     private double[] powers = new double[POWERS_SIZE];
 
@@ -87,8 +87,11 @@ public class ControlledMovement {
         powers[ANTERIORE_DX] = powers[POSTERIORE_DX] = delta;
     }
 
-    public void markerOut(){ powers[SERVOMARKER] = SERVO_ROTATION;
-        powers[SERVOMARKER2] = SERVO_ROTATION;}
+    public void markerOut(){
+
+        robot.getServo("servo_marker").setPosition(0);
+        robot.getServo("servo_marker_2").setPosition(0);
+    }
 
     public void alzaGancio(float power){
         powers[GANCIO] = power;
@@ -127,12 +130,8 @@ public class ControlledMovement {
         robot.getMotor(Configs.motorRuotaPosterioreSX).move(powers[POSTERIORE_SX] * Configs.ruotaPosterioreSXrotationFactor);
         robot.getMotor(Configs.motorBraccio).move(powers[BRACCIO] * Configs.braccioFactor);
         robot.getMotor(Configs.motorGancio).move(powers[GANCIO] * Configs.gancioFactor);
-        t.addLine("" + powers[SERVOMARKER]);
-        t.update();
-        if(powers[SERVOMARKER] > 0)
-            robot.getServo(Configs.servoMarker).move(powers[SERVOMARKER]);
-        if(powers[SERVOMARKER2] > 0)
-            robot.getServo(Configs.servoMarker2).move(powers[SERVOMARKER2]);
+        robot.getServo(Configs.servoMarker).move(powers[SERVOMARKER] * Configs.servoFactor);
+        robot.getServo(Configs.servoMarker2).move(powers[SERVOMARKER2] * Configs.servo2Factor);
         powers = new double[POWERS_SIZE];
     }
 }
