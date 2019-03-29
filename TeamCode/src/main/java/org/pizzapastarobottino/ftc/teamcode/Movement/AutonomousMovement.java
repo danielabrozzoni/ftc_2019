@@ -253,7 +253,7 @@ public class AutonomousMovement {
 
         motors.get(ANTERIORE_DX).setTargetPosition(posizione);
 
-        motors.get(ANTERIORE_DX).setPower(1);
+        motors.get(ANTERIORE_DX).setPower(1);  
         motors.get(POSTERIORE_SX).setPower(1);
 
         while(motors.get(ANTERIORE_DX).getCurrentPosition() < posizione) { }
