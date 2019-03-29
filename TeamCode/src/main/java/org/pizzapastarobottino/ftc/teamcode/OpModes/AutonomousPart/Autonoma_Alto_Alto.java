@@ -31,17 +31,9 @@ package org.pizzapastarobottino.ftc.teamcode.OpModes.AutonomousPart;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.pizzapastarobottino.ftc.teamcode.Configs;
-import org.pizzapastarobottino.ftc.teamcode.Hardware.Hardware;
-import org.pizzapastarobottino.ftc.teamcode.Hardware.Motor;
 import org.pizzapastarobottino.ftc.teamcode.Movement.AutonomousMovement;
-import org.pizzapastarobottino.ftc.teamcode.Movement.ControlledMovement;
-
-import java.util.ArrayList;
 
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
@@ -56,25 +48,9 @@ import java.util.ArrayList;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="AutoDeposito", group="A")
+@Autonomous(name="Autonoma_Alto_Alto", group="A")
 //@Disabled
-public class AutonomaDeposito extends LinearOpMode {
-
-    // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
-    private Hardware robot = new Hardware();
-    private ControlledMovement mControlledMovement;
-    private AutonomousMovement mAutonomousMovement;
-    public final int TICKS_PPR = 7;
-    public final ArrayList<Integer> gearsIndex = new ArrayList<>();
-    public final ArrayList<Motor> motors = new ArrayList<>();
-
-    private final int ANTERIORE_DX = 0;
-    private final int ANTERIORE_SX = 1;
-    private final int POSTERIORE_DX = 2;
-    private final int POSTERIORE_SX = 3;
-    private final int BRACCIO = 4;
-    private final int GANCIO = 5;
+public class Autonoma_Alto_Alto extends Autonoma_abs {
 
     @Override
     public void runOpMode() {
@@ -98,42 +74,16 @@ public class AutonomaDeposito extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        mAutonomousMovement.sinistra(3245);
+        // Gira Di 45 gradi In senso orario
+        mAutonomousMovement.giraSuTeStessoClockwise(1350/2);
+        mAutonomousMovement.aggiorna(telemetry);
         sleep(500);
+
+        // Indietro (90cm)
+        mAutonomousMovement.indietro(AVANTI_NOVANTA_CM);
         mAutonomousMovement.aggiorna(telemetry);
-        mAutonomousMovement.sinistra(1623 + 381*2);
-        mAutonomousMovement.aggiorna(telemetry);
-        //mAutonomousMovement.markerOut();
         sleep(500);
-        mAutonomousMovement.giraSuTeStesso(1350/2);
-        mAutonomousMovement.aggiorna(telemetry);
 
-
-        /*for(Motor m: motors) {
-
-            m.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            m.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            m.setTargetPosition(1440);
-            m.setPower(1);
-        }
-
-        while(motors.get(ANTERIORE_DX).getCurrentPosition() <  motors.get(ANTERIORE_DX).getTargetPosition() &&
-                motors.get(ANTERIORE_SX).getCurrentPosition() <  motors.get(ANTERIORE_SX).getTargetPosition() &&
-                motors.get(POSTERIORE_DX).getCurrentPosition() <  motors.get(POSTERIORE_DX).getTargetPosition() &&
-                motors.get(POSTERIORE_SX).getCurrentPosition() <  motors.get(POSTERIORE_SX).getTargetPosition()) {
-            try {
-                waitOneFullHardwareCycle();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        for(Motor m: motors) {
-            m.setPower(0);
-        }
-
-
-        mControlledMovement.resetPowers();*/
 
     }
 }

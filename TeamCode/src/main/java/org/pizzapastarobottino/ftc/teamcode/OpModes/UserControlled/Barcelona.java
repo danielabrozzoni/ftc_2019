@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.Consumer;
 import org.pizzapastarobottino.ftc.teamcode.Hardware.Hardware;
 import org.pizzapastarobottino.ftc.teamcode.Hardware.Mechanism;
+import org.pizzapastarobottino.ftc.teamcode.Movement.AutonomousMovement;
 import org.pizzapastarobottino.ftc.teamcode.Movement.ControlledMovement;
 
 
@@ -18,11 +19,13 @@ import org.pizzapastarobottino.ftc.teamcode.Movement.ControlledMovement;
 public class Barcelona extends OpMode {
     private Hardware robot = new Hardware();
     private ControlledMovement mControlledMovement;
+    private AutonomousMovement mAutonomousMovement;
 
     @Override
     public void init() {
         robot.init(hardwareMap);
         mControlledMovement = new ControlledMovement(robot);
+        mAutonomousMovement = new AutonomousMovement(robot);
     }
 
     private void antipanico() {
@@ -90,7 +93,7 @@ public class Barcelona extends OpMode {
         }
 
         if (gamepad2.dpad_up) {
-            mControlledMovement.alzaGancio(potenza);
+            mAutonomousMovement.alzaBraccio(15);
         }
 
         if (gamepad2.x) {
@@ -98,8 +101,10 @@ public class Barcelona extends OpMode {
         }
 
         if (gamepad2.dpad_down) {
-            mControlledMovement.abbassaGancio(potenza);
+            mAutonomousMovement.abbassaBraccio(15);
         }
+
+        if(gamepad2.x && gamepad2.y && gamepad1.right_trigger > 0.9) antipanico();
 
         trasla(gamepad2.left_stick_x, gamepad2.left_stick_y);
 

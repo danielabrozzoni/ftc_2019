@@ -6,6 +6,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.pizzapastarobottino.ftc.teamcode.Configs;
 import org.pizzapastarobottino.ftc.teamcode.Hardware.Hardware;
 import org.pizzapastarobottino.ftc.teamcode.Hardware.Motor;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 import java.util.ArrayList;
 
@@ -121,7 +124,7 @@ public class AutonomousMovement {
 
     }
 
-    public void giraSuTeStesso(int posizione) {
+    public void giraSuTeStessoClockwise(int posizione) {
         motors.get(ANTERIORE_SX).setBaseDirection(Configs.indietro);
         motors.get(POSTERIORE_SX).setBaseDirection(Configs.indietro);
         motors.get(POSTERIORE_DX).setBaseDirection(Configs.indietro);
@@ -148,6 +151,32 @@ public class AutonomousMovement {
 
     }
 
+    public void giraSuTeStessoAntiClockwise(int posizione) {
+        motors.get(ANTERIORE_SX).setBaseDirection(Configs.avanti);
+        motors.get(POSTERIORE_SX).setBaseDirection(Configs.avanti);
+        motors.get(POSTERIORE_DX).setBaseDirection(Configs.avanti);
+        motors.get(ANTERIORE_DX).setBaseDirection(Configs.avanti);
+
+        motoriAttivi.set(ANTERIORE_SX, true);
+        motoriAttivi.set(ANTERIORE_DX, true);
+        motoriAttivi.set(POSTERIORE_DX, true);
+        motoriAttivi.set(POSTERIORE_SX, true);
+
+        motors.get(ANTERIORE_DX).setTargetPosition(posizione);
+
+        motors.get(POSTERIORE_DX).setPower(1);
+        motors.get(POSTERIORE_SX).setPower(1);
+        motors.get(ANTERIORE_DX).setPower(1);
+        motors.get(ANTERIORE_SX).setPower(1);
+
+        while(motors.get(ANTERIORE_DX).getCurrentPosition() < posizione) { }
+
+        motors.get(POSTERIORE_DX).setPower(0);
+        motors.get(POSTERIORE_SX).setPower(0);
+        motors.get(ANTERIORE_DX).setPower(0);
+        motors.get(ANTERIORE_SX).setPower(0);
+
+    }
     public void sinistra(int posizione) {
         motors.get(ANTERIORE_SX).setBaseDirection(Configs.avanti);
         motors.get(POSTERIORE_SX).setBaseDirection(Configs.indietro);
@@ -242,6 +271,42 @@ public class AutonomousMovement {
 
     }
 
+    public void alzaBraccio(int secondi){
+        Timer timer = new Timer();
+        motors.get(GANCIO).setBaseDirection(Configs.avanti);
+        motoriAttivi.set(GANCIO, true);
+        motoriAttivi.set(ANTERIORE_SX, false);
+        motoriAttivi.set(ANTERIORE_DX, false);
+        motoriAttivi.set(POSTERIORE_DX, false);
+        motoriAttivi.set(POSTERIORE_SX, false);
+        motors.get(GANCIO).setPower(1);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+
+            }
+        }, secondi*1000);
+        motors.get(GANCIO).setPower(0);
+    }
+
+    public void abbassaBraccio(int secondi){
+        Timer timer = new Timer();
+        motors.get(GANCIO).setBaseDirection(Configs.avanti);
+        motoriAttivi.set(GANCIO, true);
+        motoriAttivi.set(ANTERIORE_SX, false);
+        motoriAttivi.set(ANTERIORE_DX, false);
+        motoriAttivi.set(POSTERIORE_DX, false);
+        motoriAttivi.set(POSTERIORE_SX, false);
+        motors.get(GANCIO).setPower(1);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+
+            }
+        }, secondi*1000);
+        motors.get(GANCIO).setPower(0);
+    }
+
     public void diagonaleGiuDestra(int posizione) {
         motors.get(ANTERIORE_DX).setBaseDirection(Configs.indietro);
         motors.get(POSTERIORE_SX).setBaseDirection(Configs.avanti);
@@ -253,21 +318,15 @@ public class AutonomousMovement {
 
         motors.get(ANTERIORE_DX).setTargetPosition(posizione);
 
-        motors.get(ANTERIORE_DX).setPower(1);  
+        motors.get(ANTERIORE_DX).setPower(1);
         motors.get(POSTERIORE_SX).setPower(1);
 
-        while(motors.get(ANTERIORE_DX).getCurrentPosition() < posizione) { }
+        while (motors.get(ANTERIORE_DX).getCurrentPosition() < posizione) {
+        }
 
         motors.get(POSTERIORE_SX).setPower(0);
         motors.get(ANTERIORE_DX).setPower(0);
 
-
-    }
-
-    public void abbassaBraccio(int posizione){
-        motors.get(GANCIO).setBaseDirection(Configs.avanti);
-
-        motoriAttivi.set(GANCIO, true);
 
     }
 
