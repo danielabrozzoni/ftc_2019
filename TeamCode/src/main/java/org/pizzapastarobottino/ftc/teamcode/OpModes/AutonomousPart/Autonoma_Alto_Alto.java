@@ -54,35 +54,33 @@ public class Autonoma_Alto_Alto extends Autonoma_abs {
 
     @Override
     public void runOpMode() {
-        robot.init(hardwareMap);
 
-        motors.add(ANTERIORE_DX, robot.getMotor(Configs.motorRuotaAnterioreDX));
-        motors.add(ANTERIORE_SX, robot.getMotor(Configs.motorRuotaAnterioreSX));
-        motors.add(POSTERIORE_DX, robot.getMotor(Configs.motorRuotaPosterioreDX));
-        motors.add(POSTERIORE_SX, robot.getMotor(Configs.motorRuotaPosterioreSX));
-
-        gearsIndex.add(ANTERIORE_DX, 60);
-        gearsIndex.add(ANTERIORE_SX, 60);
-        gearsIndex.add(POSTERIORE_DX, 60);
-        gearsIndex.add(POSTERIORE_SX, 60);
-
-        mAutonomousMovement = new AutonomousMovement(robot);
-
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
+        initMotors();
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
+        //gancio();
+
         // Gira Di 45 gradi In senso orario
         mAutonomousMovement.giraSuTeStessoClockwise(1350/2);
-        mAutonomousMovement.aggiorna(telemetry);
-        sleep(500);
+        update();
 
         // Indietro (90cm)
         mAutonomousMovement.indietro(AVANTI_NOVANTA_CM);
-        mAutonomousMovement.aggiorna(telemetry);
-        sleep(500);
+        update();
+
+        // Destra (30cm + 60cm + 30cm)
+        mAutonomousMovement.destra(TRASLA_SESSANTA_CM);
+        update();
+
+        // Indietro (20cm)
+        mAutonomousMovement.indietro(AVANTI_SESSANTA_CM/3);
+        update();
+
+        // Marker Fuori
+        //mAutonomousMovement.markerOut();
+        //update();
 
 
     }

@@ -271,7 +271,7 @@ public class AutonomousMovement {
 
     }
 
-    public void alzaBraccio(int secondi){
+    public void alzaGancio(int secondi){
         Timer timer = new Timer();
         motors.get(GANCIO).setBaseDirection(Configs.avanti);
         motoriAttivi.set(GANCIO, true);
@@ -289,7 +289,7 @@ public class AutonomousMovement {
         motors.get(GANCIO).setPower(0);
     }
 
-    public void abbassaBraccio(int secondi){
+    public void abbassaGancio(int secondi){
         Timer timer = new Timer();
         motors.get(GANCIO).setBaseDirection(Configs.avanti);
         motoriAttivi.set(GANCIO, true);

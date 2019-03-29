@@ -31,17 +31,6 @@ package org.pizzapastarobottino.ftc.teamcode.OpModes.AutonomousPart;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.pizzapastarobottino.ftc.teamcode.Configs;
-import org.pizzapastarobottino.ftc.teamcode.Hardware.Hardware;
-import org.pizzapastarobottino.ftc.teamcode.Hardware.Motor;
-import org.pizzapastarobottino.ftc.teamcode.Movement.AutonomousMovement;
-import org.pizzapastarobottino.ftc.teamcode.Movement.ControlledMovement;
-
-import java.util.ArrayList;
 
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
@@ -56,9 +45,9 @@ import java.util.ArrayList;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Autonoma_Alto_Centro", group="A")
+@Autonomous(name="Autonoma_Basso_Centro", group="A")
 //@Disabled
-public class Autonoma_Alto_Centro extends Autonoma_abs {
+public class Autonoma_Basso_Centro extends Autonoma_abs {
 
     @Override
     public void runOpMode() {
@@ -70,12 +59,24 @@ public class Autonoma_Alto_Centro extends Autonoma_abs {
 
         //gancio();
 
-        // Fino al Cubetto, Poi nel Deposito (85cm + 42,5cm + 20cm)
-        mAutonomousMovement.sinistra(TRASLA_OTTANTACINQUE_CM + TRASLA_QUARANTADUE_CM + TRASLA_DIECI_CM*2);
+        // Fino al Cubetto, Poi nel Deposito (85cm)
+        mAutonomousMovement.sinistra(TRASLA_OTTANTACINQUE_CM);
         update();
 
-        // Si gira dritto, facilitando l'inizio dell'autonoma (45 gradi in senso orario)
-        mAutonomousMovement.giraSuTeStessoClockwise(1350/2);
+        // 45 gradi in senso antiorario
+        mAutonomousMovement.giraSuTeStessoAntiClockwise(GIRA_90_GRADI/2);
+        update();
+
+        // Indietro di 60cm
+        mAutonomousMovement.indietro(AVANTI_SESSANTA_CM);
+        update();
+
+        // Sinistra di 60cm
+        mAutonomousMovement.sinistra(TRASLA_SESSANTA_CM);
+        update();
+
+        // Indietro di 170cm
+        mAutonomousMovement.indietro(AVANTI_SESSANTA_CM*3 - AVANTI_TRENTA_CM/3);
         update();
 
         //Marker Fuori

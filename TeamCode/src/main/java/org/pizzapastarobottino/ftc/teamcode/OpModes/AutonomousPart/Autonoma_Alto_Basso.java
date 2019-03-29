@@ -31,17 +31,6 @@ package org.pizzapastarobottino.ftc.teamcode.OpModes.AutonomousPart;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.pizzapastarobottino.ftc.teamcode.Configs;
-import org.pizzapastarobottino.ftc.teamcode.Hardware.Hardware;
-import org.pizzapastarobottino.ftc.teamcode.Hardware.Motor;
-import org.pizzapastarobottino.ftc.teamcode.Movement.AutonomousMovement;
-import org.pizzapastarobottino.ftc.teamcode.Movement.ControlledMovement;
-
-import java.util.ArrayList;
 
 /**
  * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
@@ -56,9 +45,9 @@ import java.util.ArrayList;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Autonoma_Alto_Centro", group="A")
+@Autonomous(name="Autonoma_Alto_Basso", group="A")
 //@Disabled
-public class Autonoma_Alto_Centro extends Autonoma_abs {
+public class Autonoma_Alto_Basso extends Autonoma_abs {
 
     @Override
     public void runOpMode() {
@@ -68,14 +57,30 @@ public class Autonoma_Alto_Centro extends Autonoma_abs {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        //gancio();
+        gancio();
 
-        // Fino al Cubetto, Poi nel Deposito (85cm + 42,5cm + 20cm)
-        mAutonomousMovement.sinistra(TRASLA_OTTANTACINQUE_CM + TRASLA_QUARANTADUE_CM + TRASLA_DIECI_CM*2);
+        // Si gira dritto (45 gradi in senso antiorario)
+        mAutonomousMovement.giraSuTeStessoAntiClockwise(GIRA_90_GRADI/2);
         update();
 
-        // Si gira dritto, facilitando l'inizio dell'autonoma (45 gradi in senso orario)
-        mAutonomousMovement.giraSuTeStessoClockwise(1350/2);
+        // Avanti per 90cm
+        mAutonomousMovement.avanti(AVANTI_NOVANTA_CM);
+        update();
+
+        // Sinistra per spostare il Cubetto di 30cm
+        mAutonomousMovement.sinistra(TRASLA_SESSANTA_CM/2);
+        update();
+
+        // Avanti di 30cm
+        mAutonomousMovement.avanti(AVANTI_TRENTA_CM);
+        update();
+
+        // Sinistra di 80cm
+        mAutonomousMovement.sinistra(TRASLA_SESSANTA_CM + TRASLA_DIECI_CM*2);
+        update();
+
+        //Ruota 90 Gradi
+        mAutonomousMovement.giraSuTeStessoClockwise(GIRA_90_GRADI);
         update();
 
         //Marker Fuori

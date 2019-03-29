@@ -68,7 +68,7 @@ public abstract class Autonoma_abs extends LinearOpMode {
     protected final int ANTERIORE_SX = 1;
     protected final int POSTERIORE_DX = 2;
     protected final int POSTERIORE_SX = 3;
-    protected final int BRACCIO = 4;
+    protected final int gancio = 4;
     protected final int GANCIO = 5;
 
     protected final int AVANTI_TRENTA_CM = 772;
@@ -79,19 +79,55 @@ public abstract class Autonoma_abs extends LinearOpMode {
     protected final int TRASLA_SETTANTA_CM = 2667;
     protected final int TRASLA_QUARANTADUE_CM = 1623;
     protected final int TRASLA_OTTANTACINQUE_CM = 3245;
+    protected final int TRASLA_SESSANTA_CM = 2291;
 
     protected final int GIRA_90_GRADI = 1350;
 
     @Override
     public void runOpMode() {
+
     }
 
-    public void braccio(){
-        mAutonomousMovement.abbassaBraccio(15);
+    public void gancio(){
+        mAutonomousMovement.abbassaGancio(15);
+        updateNoStop();
+        mAutonomousMovement.alzaGancio(2);
+        updateNoStop();
+        mAutonomousMovement.indietro(AVANTI_TRENTA_CM/6);
+        updateNoStop();
+        mAutonomousMovement.sinistra(TRASLA_DIECI_CM/2);
+        updateNoStop();
+        mAutonomousMovement.avanti(AVANTI_TRENTA_CM/6);
+        updateNoStop();
     }
 
     public void update(){
         sleep(500);
         mAutonomousMovement.aggiorna(telemetry);
     }
+
+    public void updateNoStop(){
+        mAutonomousMovement.aggiorna(telemetry);
+    }
+
+    public void initMotors(){
+        robot.init(hardwareMap);
+
+        motors.add(ANTERIORE_DX, robot.getMotor(Configs.motorRuotaAnterioreDX));
+        motors.add(ANTERIORE_SX, robot.getMotor(Configs.motorRuotaAnterioreSX));
+        motors.add(POSTERIORE_DX, robot.getMotor(Configs.motorRuotaPosterioreDX));
+        motors.add(POSTERIORE_SX, robot.getMotor(Configs.motorRuotaPosterioreSX));
+
+        gearsIndex.add(ANTERIORE_DX, 60);
+        gearsIndex.add(ANTERIORE_SX, 60);
+        gearsIndex.add(POSTERIORE_DX, 60);
+        gearsIndex.add(POSTERIORE_SX, 60);
+
+        mAutonomousMovement = new AutonomousMovement(robot);
+
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
+
+    }
+
 }
