@@ -29,7 +29,7 @@ public class Hardware {
 
     private MechanismMap<String> mechanisms = new MechanismMap<>();
 
-    private ColorSensor mColorSensor;
+    //private ColorSensor mColorSensor;
     private HardwareMap hwMap = null;
     private ElapsedTime period = new ElapsedTime();
 
@@ -54,7 +54,7 @@ public class Hardware {
         // Save reference to Hardware map
 
         hwMap = ahwMap;
-        mColorSensor = hwMap.colorSensor.get(Configs.colorSensor);
+        //mColorSensor = hwMap.colorSensor.get(Configs.colorSensor);
 
         // Define and Initialize Motors
         mechanisms.put(Configs.motorRuotaPosterioreDX, new Motor(hwMap.dcMotor.get(Configs.motorRuotaPosterioreDX)), Configs.avanti, 0);
@@ -63,8 +63,8 @@ public class Hardware {
         mechanisms.put(Configs.motorRuotaAnterioreSX, new Motor(hwMap.dcMotor.get(Configs.motorRuotaAnterioreSX)), Configs.indietro, 0);
         mechanisms.put(Configs.motorBraccio, new Motor(hwMap.dcMotor.get(Configs.motorBraccio)), Configs.avanti, 0);
         mechanisms.put(Configs.motorGancio, new Motor(hwMap.dcMotor.get(Configs.motorGancio)), Configs.avanti, 0);
-        mechanisms.put(Configs.servoMarker, new Servo(hwMap.servo.get(Configs.servoMarker), Configs.servoMarker, Configs.markerFactor, 0));
-        mechanisms.put(Configs.servoMarker2, new Servo(hwMap.servo.get(Configs.servoMarker2), Configs.servoMarker2, Configs.markerFactor, 0));
+        //mechanisms.put(Configs.servoMarker, new Servo(hwMap.servo.get(Configs.servoMarker), Configs.servoMarker, Configs.markerFactor, 0));
+        //mechanisms.put(Configs.servoMarker2, new Servo(hwMap.servo.get(Configs.servoMarker2), Configs.servoMarker2, Configs.markerFactor, 0));
 
 
         for(Mechanism i : mechanisms.values()){
@@ -82,6 +82,7 @@ public class Hardware {
      *
      * @param periodMs  Length of wait cycle in mSec.
      **/
+
     public void waitForTick(long periodMs) {
 
         long remaining = periodMs - (long) period.milliseconds();
@@ -99,8 +100,8 @@ public class Hardware {
         period.reset();
     }
 
-    public ColorSensor getColorSensor() {
-        return mColorSensor;
-    }
-
+    //public ColorSensor getColorSensor() {
+      //  return mColorSensor;
 }
+
+

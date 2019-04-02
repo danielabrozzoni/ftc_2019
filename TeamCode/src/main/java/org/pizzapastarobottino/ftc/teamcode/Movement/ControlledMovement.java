@@ -14,7 +14,7 @@ public class ControlledMovement {
     private final int GANCIO = 5;
     private final int SERVOMARKER = 6;
     private final int SERVOMARKER2 = 7;
-    private final int POWERS_SIZE = 8;
+    private final int POWERS_SIZE = 6;
 
     private final double ANT_SX_POWER = 0.4;
     private final double ANT_DX_POWER = 0.4;
@@ -130,8 +130,8 @@ public class ControlledMovement {
         robot.getMotor(Configs.motorRuotaPosterioreSX).move(powers[POSTERIORE_SX] * Configs.ruotaPosterioreSXrotationFactor);
         robot.getMotor(Configs.motorBraccio).move(powers[BRACCIO] * Configs.braccioFactor);
         robot.getMotor(Configs.motorGancio).move(powers[GANCIO] * Configs.gancioFactor);
-        robot.getServo(Configs.servoMarker).move(powers[SERVOMARKER] * Configs.servoFactor);
-        robot.getServo(Configs.servoMarker2).move(powers[SERVOMARKER2] * Configs.servo2Factor);
+        // robot.getServo(Configs.servoMarker).move(powers[SERVOMARKER] * Configs.servoFactor);
+       // robot.getServo(Configs.servoMarker2).move(powers[SERVOMARKER2] * Configs.servo2Factor);
         powers = new double[POWERS_SIZE];
     }
 }

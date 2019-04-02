@@ -56,7 +56,7 @@ import org.pizzapastarobottino.ftc.teamcode.OpModes.UserControlled.MechanumWheel
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-//@Autonomous(name="AutoSx", group="A")
+@Autonomous(name="AutoSx", group="A")
 //@Disabled
 public class AutoSx extends LinearOpMode {
 

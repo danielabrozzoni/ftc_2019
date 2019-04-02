@@ -2,6 +2,7 @@ package org.pizzapastarobottino.ftc.teamcode.OpModes.UserControlled;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Consumer;
 import org.pizzapastarobottino.ftc.teamcode.Hardware.Hardware;
@@ -17,15 +18,18 @@ import org.pizzapastarobottino.ftc.teamcode.Movement.ControlledMovement;
 @TeleOp(name = "Barcelona", group = "A")
 
 public class Barcelona extends OpMode {
-    private Hardware robot = new Hardware();
-    private ControlledMovement mControlledMovement;
-    private AutonomousMovement mAutonomousMovement;
+    protected Hardware robot = new Hardware();
+    protected ControlledMovement mControlledMovement;
+    protected AutonomousMovement mAutonomousMovement;
+    private boolean eseguitoUp = false, downP = false;
 
     @Override
     public void init() {
         robot.init(hardwareMap);
         mControlledMovement = new ControlledMovement(robot);
         mAutonomousMovement = new AutonomousMovement(robot);
+        eseguitoUp = false;
+        downP = false;
     }
 
     private void antipanico() {
@@ -44,7 +48,7 @@ public class Barcelona extends OpMode {
         telemetry.addLine("Dpad -> Su: " + gamepad2.dpad_up + " giu: " + gamepad2.dpad_down + " sx: " + gamepad2.dpad_left + " dx: " + gamepad2.dpad_right);
         telemetry.addLine("Bumpers -> sx " + gamepad2.left_bumper + " dx: " + gamepad2.right_bumper);
         telemetry.addLine("Trigger -> sx: " + gamepad2.left_trigger +  " dx: " + gamepad2.right_trigger);
-        telemetry.addLine("Sensore di colore1 -> R:" + robot.getColorSensor().red() + " B: " + robot.getColorSensor().blue() + " G: " + robot.getColorSensor().green() + " color int: " + robot.getColorSensor().alpha());
+       //telemetry.addLine("Sensore di colore1 -> R:" + robot.getColorSensor().red() + " B: " + robot.getColorSensor().blue() + " G: " + robot.getColorSensor().green() + " color int: " + robot.getColorSensor().alpha());
     }
 
 
@@ -81,7 +85,6 @@ public class Barcelona extends OpMode {
 
     @Override
     public void loop() {
-        float potenza = 1;
         tellState();
 
         if (gamepad2.right_trigger > 0) {
@@ -92,16 +95,18 @@ public class Barcelona extends OpMode {
             mControlledMovement.braccioGiu(gamepad2.left_trigger);
         }
 
-        if (gamepad2.dpad_up) {
-            mAutonomousMovement.alzaBraccio(15);
+        if (gamepad2.dpad_up && !eseguitoUp) {
+            if (!MuoviGancio.isUpP()) {
+                new MuoviGancio(this, true);
+                eseguitoUp = true;
+            }
         }
 
-        if (gamepad2.x) {
-            mControlledMovement.markerOut();
-        }
-
-        if (gamepad2.dpad_down) {
-            mAutonomousMovement.abbassaBraccio(15);
+        if (gamepad2.dpad_down && eseguitoUp) {
+            if (!MuoviGancio.isUpP()) {
+                new MuoviGancio(this, false);
+                eseguitoUp = false;
+            }
         }
 
         if(gamepad2.x && gamepad2.y && gamepad1.right_trigger > 0.9) antipanico();
@@ -114,5 +119,49 @@ public class Barcelona extends OpMode {
 
         mControlledMovement.aggiorna(telemetry);
     }
+
+}
+
+class MuoviGancio extends Thread{
+    private Barcelona b;
+    private boolean up;
+    private static MuoviGancio instance;
+    protected static boolean upP = false;
+
+    public MuoviGancio(Barcelona b, boolean up) {
+        this.b=b;
+        this.up = up;
+        instance = this;
+        start();
+    };
+
+    public void run() {
+        if (up) {
+            synchronized (this) {
+                upP = true;
+            }
+            b.mAutonomousMovement.alzaGancio(1440);
+            synchronized (this) {
+                upP = false;
+            }
+        }
+        else {
+            synchronized (this) {
+                upP = true;
+            }
+            b.mAutonomousMovement.abbassaGancio(1440);
+            synchronized (this) {
+                upP = false;
+            }
+        }
+    }
+
+    public static boolean isUpP(){
+        synchronized (instance){
+            return upP;
+        }
+
+    }
+
 
 }

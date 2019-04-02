@@ -31,6 +31,7 @@ package org.pizzapastarobottino.ftc.teamcode.OpModes.AutonomousPart;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -55,6 +56,8 @@ import java.util.ArrayList;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
+//@Autonomous(name="Abs", group="A")
+@Disabled
 public abstract class Autonoma_abs extends LinearOpMode {
 
     // Declare OpMode members.
@@ -68,7 +71,7 @@ public abstract class Autonoma_abs extends LinearOpMode {
     protected final int ANTERIORE_SX = 1;
     protected final int POSTERIORE_DX = 2;
     protected final int POSTERIORE_SX = 3;
-    protected final int gancio = 4;
+    protected final int BRACCIO = 4;
     protected final int GANCIO = 5;
 
     protected final int AVANTI_TRENTA_CM = 772;

@@ -37,6 +37,7 @@ public class AutonomousMovement {
         motoriAttivi.add(ANTERIORE_SX, true);
         motoriAttivi.add(POSTERIORE_DX, true);
         motoriAttivi.add(POSTERIORE_SX, true);
+        motoriAttivi.add(GANCIO, true);
 
         for(Motor m: motors) {
 
@@ -271,8 +272,7 @@ public class AutonomousMovement {
 
     }
 
-    public void alzaGancio(int secondi){
-        Timer timer = new Timer();
+    public void alzaGancio(int posizione){
         motors.get(GANCIO).setBaseDirection(Configs.avanti);
         motoriAttivi.set(GANCIO, true);
         motoriAttivi.set(ANTERIORE_SX, false);
@@ -280,30 +280,25 @@ public class AutonomousMovement {
         motoriAttivi.set(POSTERIORE_DX, false);
         motoriAttivi.set(POSTERIORE_SX, false);
         motors.get(GANCIO).setPower(1);
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
+        motors.get(GANCIO).setTargetPosition(posizione);
 
-            }
-        }, secondi*1000);
+        while(motors.get(GANCIO).getCurrentPosition() < posizione) { }
+
         motors.get(GANCIO).setPower(0);
     }
 
-    public void abbassaGancio(int secondi){
-        Timer timer = new Timer();
-        motors.get(GANCIO).setBaseDirection(Configs.avanti);
+    public void abbassaGancio(int posizione){
+        motors.get(GANCIO).setBaseDirection(Configs.indietro);
         motoriAttivi.set(GANCIO, true);
         motoriAttivi.set(ANTERIORE_SX, false);
         motoriAttivi.set(ANTERIORE_DX, false);
         motoriAttivi.set(POSTERIORE_DX, false);
         motoriAttivi.set(POSTERIORE_SX, false);
         motors.get(GANCIO).setPower(1);
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
+        motors.get(ANTERIORE_SX).setTargetPosition(posizione);
 
-            }
-        }, secondi*1000);
+        while(motors.get(GANCIO).getCurrentPosition() < posizione) { }
+
         motors.get(GANCIO).setPower(0);
     }
 
