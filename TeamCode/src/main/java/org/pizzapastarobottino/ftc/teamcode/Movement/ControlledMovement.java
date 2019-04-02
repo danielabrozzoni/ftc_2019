@@ -20,7 +20,7 @@ public class ControlledMovement {
     private final double ANT_DX_POWER = 0.4;
     private final double POS_SX_POWER = 0.4;
     private final double POS_DX_POWER = 0.4;
-    private final double SERVO_ROTATION = 0;
+    private final double BRACCIO_POWER = 0.1;
 
     private double[] powers = new double[POWERS_SIZE];
 
@@ -102,11 +102,11 @@ public class ControlledMovement {
     }
 
     public void braccioSu(float power){
-        powers[BRACCIO] = power;
+        powers[BRACCIO] = power * BRACCIO_POWER;
     }
 
     public void braccioGiu(float power){
-        powers[BRACCIO] = -power;
+        powers[BRACCIO] = -power * BRACCIO_POWER;
     }
 
 

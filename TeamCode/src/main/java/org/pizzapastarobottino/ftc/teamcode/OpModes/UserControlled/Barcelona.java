@@ -140,7 +140,9 @@ class MuoviGancio extends Thread{
             synchronized (this) {
                 upP = true;
             }
+            b.telemetry.addLine("Eccoci");
             b.mAutonomousMovement.alzaGancio(1440);
+            b.telemetry.addLine("Eccoci alla fine");
             synchronized (this) {
                 upP = false;
             }
@@ -157,6 +159,9 @@ class MuoviGancio extends Thread{
     }
 
     public static boolean isUpP(){
+        if(instance == null){
+            return false;
+        }
         synchronized (instance){
             return upP;
         }
